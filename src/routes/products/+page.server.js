@@ -21,7 +21,7 @@ export const actions = {
         const { data, error } = await supabase
         .from('Products')
         .insert([
-            { name: formData.get('name'), price: formData.get('price') , category_id: formData.get('category')},
+            { name: formData.get('name'), price: formData.get('price') , category_id: formData.get('category'), description: formData.get('description')},
         ])
         .select()
 

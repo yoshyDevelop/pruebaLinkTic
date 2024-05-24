@@ -93,9 +93,9 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Nombre</th>
-            <th scope="col">Category</th>
-            <th scope="col">Price</th>
-            <th scope="col">Description</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Descripcion</th>
           </tr>
         </thead>
         <tbody>
@@ -121,9 +121,13 @@
     <div class="tab-pane fade" id="create" role="tabpanel" aria-labelledby="create-tab">
       <form method="POST" action="?/add" class="row g-3">
 
-        <div class="col-md-6">
+        <div class="col-md-3">
           <label for="name" class="form-label">Nombre</label>
           <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="col-md-3">
+          <label for="description" class="form-label">Descripcion</label>
+          <input type="text" class="form-control" id="description" name="description" required>
         </div>
         <div class="col-md-4">
           <label for="category" class="form-label">Categoria</label>

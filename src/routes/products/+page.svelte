@@ -4,7 +4,7 @@
     export let data;
     let selectedCategories = []
     let filterProducts = []
-
+    let successAddproduct = false;
     async function filterProductsByCategory() {
         console.log(selectedCategories)
         const response = await fetch('api/products?/filterByCategory', {
@@ -20,6 +20,26 @@
         // const response = await fetch(`?/products/${category}`);
         // const data = await response.json();
         
+    }
+
+    async function addProduct(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        console.log(formData.get('name'))
+        const response = await fetch('products?/add', {
+                    method: 'POST',
+                    body: JSON.stringify({name: formData.get('name'), price: formData.get('price') , category_id: formData.get('category'), description: formData.get('description')}),
+                });
+        const data = await response.json();
+        if (data?.type == 'success') {
+          successAddproduct = true
+        }
+        
+        console.log(data)
+        // formData.values();
+        // const category = document.getElementById('category-select').value;
+        // const response = await fetch(`?/products/${category}`);
+        // const data = await response.json();
     }
     function getCategory(categoryId) {
         return data.categorys.find(category => category.id === categoryId)?.name;
@@ -65,9 +85,9 @@
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">Category</th>
-                <th scope="col">Price</th>
-                <th scope="col">Description</th>
+                <th scope="col">Categoria</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Descripcion</th>
               </tr>
             </thead>
             <tbody>
@@ -119,7 +139,7 @@
       </div>
     </div>
     <div class="tab-pane fade" id="create" role="tabpanel" aria-labelledby="create-tab">
-      <form method="POST" action="?/add" class="row g-3">
+      <form on:submit={addProduct} class="row g-3">
 
         <div class="col-md-3">
           <label for="name" class="form-label">Nombre</label>
@@ -149,6 +169,13 @@
       </form>
     </div>
   </div>
+
+  {#if successAddproduct}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    Producto creado con exito!
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {/if}
 
 
   

@@ -15,13 +15,13 @@ export async function load() {
 export const actions = {	
     add: async ({ cookies, request }) => {		
         console.log('ADD PRODUCT')
-        const formData = await request.formData();
-
-        console.log('formData:', formData)
+        // const formData = await request.formData();
+        const { name, price, category_id, description} = await request.json();
+        
         const { data, error } = await supabase
         .from('Products')
         .insert([
-            { name: formData.get('name'), price: formData.get('price') , category_id: formData.get('category'), description: formData.get('description')},
+            { name: name, price: price, category_id: category_id, description: description},
         ])
         .select()
 

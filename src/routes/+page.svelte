@@ -1,2 +1,5 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+
+  <h1>Bienvenido a mi prueba</h1>
+  <p>Estimado revisor, gracias por tomar el tiempo para revisar mi prueba. He trabajado diligentemente para cumplir con los requisitos y estoy ansioso por recibir tus comentarios y sugerencias. ¡Espero que disfrutes revisando mi trabajo tanto como yo disfruté haciéndolo!</p>
+  
+  

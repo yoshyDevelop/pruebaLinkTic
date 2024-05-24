@@ -16,8 +16,7 @@ export async function load() {
 
 /** @type {import('./$types').Actions} **/
 export const actions = {	
-    add: async ({ cookies, request }) => {		
-        console.log('ADD ORDER')
+    add: async ({ request }) => {		
         const { customer, products} = await request.json();
         // console.log('formData:', formData)
         const new_order = await supabase
@@ -26,12 +25,7 @@ export const actions = {
             { customer_id: customer},
         ])
         .select()
-
-        // const products = formData.getAll('product')
-        console.log('products:', products)
-
         products?.map(async (product) => {
-            console.log('product:', product)
             const new_order_product = await supabase
             .from('Order_Product')
             .insert([
@@ -40,11 +34,6 @@ export const actions = {
             .select()
         })
 
-        console.log('data:', new_order?.data)
-        console.log('error:', new_order?.error)
-        return {
-            status: 200,
-            body: new_order?.data
-        }
+        return { success: true };
     },  
 };

@@ -1,6 +1,9 @@
 <script>
     export let data;
 
+    /** @type {import('./$types').ActionData} */
+	export let form;
+    console.log('form:',form)
     let order = {
         customer: '',
         products: []
@@ -36,7 +39,11 @@
     }
 
     async function addOrder(event) {
-        event.preventDefault(); 
+        if (order.customer === '' || order.products.length === 0) {
+            alert('Por favor, seleccione un cliente y al menos un producto');
+        }
+        else {
+            event.preventDefault(); 
         const response = await fetch('orders?/add', {
             method: 'POST',
             body: JSON.stringify(order)
@@ -49,6 +56,8 @@
             products: []
         }
         productAdds = [];
+        }
+        
     }
 
     function getDetails(orderId) {

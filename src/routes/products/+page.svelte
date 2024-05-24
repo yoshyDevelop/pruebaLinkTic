@@ -173,7 +173,7 @@
   {#if successAddproduct}
   <div class="alert alert-warning alert-dismissible fade show" role="alert">
     Producto creado con exito!
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" on:click={() => successAddproduct = false}></button>
   </div>
   {/if}
 

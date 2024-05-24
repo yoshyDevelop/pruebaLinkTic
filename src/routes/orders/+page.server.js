@@ -34,6 +34,9 @@ export const actions = {
             .select()
         })
 
-        return { success: true };
+        return {
+          status: 200,
+          body: new_order?.data
+      }
     },  
 };

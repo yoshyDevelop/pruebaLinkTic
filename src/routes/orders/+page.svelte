@@ -3,6 +3,7 @@
 
     /** @type {import('./$types').ActionData} */
 	export let form;
+    let successAddOrder = false;
     console.log('form:',form)
     let order = {
         customer: '',
@@ -50,7 +51,9 @@
         });
 
         const data = await response.json();
-        
+        if (data?.type == 'success') {
+          successAddOrder = true
+        }
         order = {
             customer: '',
             products: []
@@ -220,7 +223,12 @@
 
 
 
-
+  {#if successAddOrder}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    Pedido creado con exito!
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" on:click={() => successAddOrder = false}></button>
+  </div>
+  {/if}
 
 
 

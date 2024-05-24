@@ -123,11 +123,11 @@
 
         <div class="col-md-6">
           <label for="name" class="form-label">Nombre</label>
-          <input type="text" class="form-control" id="name" name="name">
+          <input type="text" class="form-control" id="name" name="name" required>
         </div>
         <div class="col-md-4">
           <label for="category" class="form-label">Categoria</label>
-          <select id="category-select" name="category" class="form-select">
+          <select id="category-select" name="category" class="form-select" required>
             <option selected>--Por favor, elija una opción--</option>
               {#each data.categorys as category}
                   <option value="{category.id}">{category.name}</option>
@@ -136,10 +136,10 @@
         </div>
         <div class="col-md-2">
           <label for="price" class="form-label">Precio</label>
-          <input type="text" class="form-control" id="price" name="price">
+          <input type="text" class="form-control" id="price" name="price" min="0" required>
         </div>
         <div class="col-12">
-          <button type="submit" class="btn btn-primary">Crear</button>
+          <button class="btn btn-primary">Crear</button>
         </div>
         <!-- <button>Add</button> -->
       </form>

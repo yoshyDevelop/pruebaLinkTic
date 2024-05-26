@@ -68,11 +68,11 @@
     }
 
     function getProduct(productId) {
-        return data?.products.find(product => product.id === productId)?.name;
+        return data?.products.find(product => product.id === productId);
     }
 
     function getCustomer(customerId) {
-        return data?.customers.find(customer => customer.id === customerId)?.name;
+        return data?.customers.find(customer => customer.id === customerId);
         
     }
 
@@ -93,6 +93,7 @@
   </ul>
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="list-tab-pane" role="tabpanel" aria-labelledby="list-tab" tabindex="0">
+        
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -104,12 +105,12 @@
             </thead>
             <tbody>
                 {#each data?.orders as order,i}
-                    <tr on:click="{() => {selectOrder(order.id, i)}}" class="selectOrder" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <td>{i}</td>
-                        <td>{getCustomer(order?.customer_id )}</td>
+                    <tr on:click="{() => {selectOrder(order.id, i+1)}}" class="selectOrder" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <td>{i+1}</td>
+                        <td>{getCustomer(order?.customer_id )?.name}</td>
                         <td>
                             {#each getDetails(order.id) as detail}             
-                                {getProduct(detail.product_id)}, 
+                                {getProduct(detail.product_id)?.name}, 
                             {/each}
                         </td>
                         <td>{order.created_at}</td>
@@ -130,33 +131,54 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Pedido #{orderModal?.index}</h1>
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Informacion de Pedido #{orderModal?.index}</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    
+                    <h3>Información del Cliente</h3>
+                    <p>Nombre: {getCustomer(orderModal?.customer_id)?.name}</p>
+                    <p>Email: {getCustomer(orderModal?.customer_id)?.email}</p>
+                    {#if getCustomer(orderModal?.customer_id)?.address}
+                        <p>Dirección: {getCustomer(orderModal?.customer_id)?.address}</p>
+                    {:else}
+                        <p>No se proporcionó dirección.</p>
+                    {/if}
+                    <!-- Aquí puedes agregar más detalles del cliente si los tienes -->
+                    <!-- ... -->
                     <table class="table">
                     <thead>
                         <tr>
                             <th scope="col"># Producto</th>
-                            <th scope="col">Cliente</th>
+                            <!-- <th scope="col">Cliente</th> -->
                             <th scope="col">Producto</th>
                             <th scope="col">Cantidad</th>
+                            <th scope="col">Valor por unidad</th>
+                            <th scope="col">SubTotal</th>
                             
                         </tr>
                     </thead>
                     <tbody>
                             {#each getDetails(orderModal.id) as detail, i}
                                 <tr>
-                                    <th scope="row">{i}</th>
-                                    <td>{getCustomer(orderModal?.customer_id )}</td>
-                                    <td>{getProduct(detail.product_id)}</td>
+                                    <th scope="row">{i+1}</th>
+                                    <!-- <td>{getCustomer(orderModal?.customer_id )?.name}</td> -->
+                                    <td>{getProduct(detail.product_id)?.name}</td>
                                     <td>{detail.quantity}</td>
+                                    <td>{getProduct(detail.product_id)?.price}</td>
+                                    <td>{getProduct(detail.product_id)?.price * detail.quantity}</td>
                                 </tr>
-                            {/each}
+                            {/each} 
                     </tbody>
                 </table>
+                <div>
+                    <h3>Total de la Orden</h3>
+    <p>{getDetails(orderModal.id).reduce((total, detail) => total + getProduct(detail.product_id)?.price * detail.quantity, 0)}</p>
                 </div>
+                </div>
+                
                 <div class="modal-footer">
+                    
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 
                 </div>
